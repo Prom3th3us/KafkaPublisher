@@ -24,7 +24,7 @@ user-999999: Do you want to buy a boat? user-999999
 `helm repo add bitnami https://charts.bitnami.com/bitnami`
 
 `
-helm upgrade my-kafka bitnami/kafka --set metrics.kafka.enabled=true --set replicaCount=3 --version 16.2.10
+helm install my-kafka bitnami/kafka --set metrics.kafka.enabled=true --set replicaCount=6 --set numPartitions=90 --version 16.2.10
 `
 ```yml
 NAME: my-kafka

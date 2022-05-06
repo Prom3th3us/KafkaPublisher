@@ -23,7 +23,7 @@ object Main extends App {
 
   val bootstrapServers =
     config.getString("akka.kafka.producer.kafka-clients.bootstrap.servers")
-  val topic = "benchmark"
+  val topic = config.getString("topic")
 
   val producerSettings =
     ProducerSettings(system, new StringSerializer, new StringSerializer)
@@ -34,6 +34,16 @@ object Main extends App {
     val chats = 1000
     val messages = config.getInt("messagesAmount")
   }
+
+  println(s"""
+      |
+      |  BENCHMARK
+      |  
+      |  - messages: ${amount.messages}
+      |  - topic: ${topic}
+      |  
+      |  
+      |""".stripMargin)
   object dataset {
     val messages = Seq(
       "hello!",
