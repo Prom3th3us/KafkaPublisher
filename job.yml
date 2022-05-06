@@ -16,6 +16,6 @@ spec:
             - name: MESSAGES_AMOUNT
               value: "1000000000"
             - name: TOPIC
-              value: benchmark-but-with-90-partitions
+              value: TOPICO-MAXI
       restartPolicy: OnFailure
       # The pod template ends here
