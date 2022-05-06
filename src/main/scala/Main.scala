@@ -32,7 +32,7 @@ object Main extends App {
   object amount {
     val users = 1000 * 1000
     val chats = 1000
-    val messages = 1000 * 1000
+    val messages = config.getInt("messagesAmount")
   }
   object dataset {
     val messages = Seq(

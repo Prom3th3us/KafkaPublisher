@@ -13,5 +13,7 @@ spec:
           env:
             - name: KAFKA_SERVERS
               value: "my-kafka.default.svc.cluster.local:9092"
+            - name: MESSAGES_AMOUNT
+              value: 1000000000
       restartPolicy: OnFailure
       # The pod template ends here
