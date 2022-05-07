@@ -54,6 +54,8 @@ object Main extends App {
       |  - messages: ${amount.messages}
       |  - topic: ${topic}
       |  
+      |  EXPOSING PORT 9095 for PROMETHEUS metrics
+      |  
       |  
       |""".stripMargin)
   object dataset {
