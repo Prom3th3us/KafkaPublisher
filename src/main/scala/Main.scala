@@ -94,7 +94,6 @@ object Main extends App {
   val done = Source(1 to amount.messages)
     .map { i =>
       val message = Message.generator(i)
-      messagesPublished.inc()
       ProducerMessage.single(
         new ProducerRecord(
           topic,
@@ -105,5 +104,8 @@ object Main extends App {
       )
     }
     .via(Producer.flexiFlow(producerSettings))
-    .runWith(Sink.ignore)
+    .runWith(Sink.foreach { _ =>
+      messagesPublished.inc()
+
+    })
 }
