@@ -12,9 +12,9 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: KAFKA_SERVERS
-              value: "my-kafka.default.svc.cluster.local:9092"
+              value: "zkless-kafka-bootstrap:9092"
             - name: MESSAGES_AMOUNT
-              value: "1000000000"
+              value: "26000000"
             - name: TOPIC
               value: TOPICO-MAXI
       restartPolicy: OnFailure
