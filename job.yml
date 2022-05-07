@@ -4,12 +4,20 @@ metadata:
   name: alpakka-kafka-publisher-1-million
 spec:
   template:
+    metadata:
+      labels:
+        app: pcs-cluster
     # This is the pod template
     spec:
       containers:
         - name: alpakka-kafka-publisher-1-million
           image: miguelemos/alpakka_kafka_publisher:amd64
           imagePullPolicy: IfNotPresent
+          ports:
+            - protocol: TCP
+              port: 9095
+              targetPort: 9095
+              name: monitoring
           env:
             - name: KAFKA_SERVERS
               value: "kafka-svc.kafka-kraft.svc.cluster.local:9092"
@@ -19,3 +27,17 @@ spec:
               value: 3-partition
       restartPolicy: OnFailure
       # The pod template ends here
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: servicemonitor-pcs-cluster
+  labels:
+    release: prometheus
+    app: pcs-cluster
+spec:
+  selector:
+    matchLabels:
+      app: pcs-cluster
+  endpoints:
+    - port: monitoring
