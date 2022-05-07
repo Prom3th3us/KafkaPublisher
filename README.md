@@ -24,8 +24,11 @@ user-999999: Do you want to buy a boat? user-999999
 `helm repo add bitnami https://charts.bitnami.com/bitnami`
 
 `
-helm install my-kafka bitnami/kafka --set metrics.kafka.enabled=true --set replicaCount=6 --set numPartitions=90 --version 16.2.10
+helm uninstall my-kafka
+helm install my-kafka bitnami/kafka --set deleteTopicEnable=true --set metrics.kafka.enabled=true --set replicaCount=3 --set numPartitions=30 --version 16.2.10
+helm upgrade my-kafka bitnami/kafka --set deleteTopicEnable=true --set metrics.kafka.enabled=true --set replicaCount=3 --set numPartitions=30 --version 16.2.10
 `
+
 ```yml
 NAME: my-kafka
 LAST DEPLOYED: Fri May 6 17:23:45 2022
@@ -54,12 +57,29 @@ To create a pod that you can use as a Kafka client run the following commands:
       --bootstrap-server my-kafka.default.svc.cluster.local:9092 \
       --topic test \
       --from-beginning
-```
-helm repo delete prometheus-community https://prometheus-community.github.io/helm-charts
 
-helm delete prometheus-kafka-exporter \
---set kafkaServer[0]=my-kafka.default.svc.cluster.local:9092 \
-prometheus-community/prometheus-kafka-exporter 
+  DESCRIBE TOPIC:
+    kafka-topics.sh \
+    --bootstrap-server zkless-kafka-bootstrap:9092 \
+    --describe \
+    --topic TOPICO-MAXI
+  
+  CREATE TOPIC:
+    kafka-topics.sh --create \
+    --bootstrap-server my-kafka.default.svc.cluster.local:9092 \
+    --create \
+    --topic 3-partitions \
+    --partitions 3
+
+
+  DELETE TOPIC:
+    kafka-topics.sh \
+    --bootstrap-server my-kafka.default.svc.cluster.local:9092 \
+    --delete \
+    --topic 3-partitions
+
+```
+
 
 `helm install kafka-exporter \
 --set replicaCount=1 \

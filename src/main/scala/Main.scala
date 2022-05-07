@@ -3,12 +3,24 @@ import akka.kafka.ProducerMessage.MultiResultPart
 import akka.kafka.scaladsl.Producer
 import akka.stream.scaladsl._
 import com.typesafe.config.ConfigFactory
+import io.prometheus.client.exporter.HTTPServer
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.common.serialization.StringSerializer
 
 import scala.util.Random
 
 object Main extends App {
+
+  import io.prometheus.client.Counter
+  val messagesPublished: Counter =
+    Counter.build
+      .name("messages_published")
+      .help("Total messages published to Kafka.")
+      .register
+
+  val server: HTTPServer = new HTTPServer.Builder()
+    .withPort(9095)
+    .build()
 
   implicit val system = akka.actor.ActorSystem("benchmark")
   val config = ConfigFactory
@@ -30,9 +42,9 @@ object Main extends App {
       .withBootstrapServers(bootstrapServers)
 
   object amount {
-    val users = 1000 * 1000
-    val chats = 1000
     val messages = config.getInt("messagesAmount")
+    val users = messages / 10
+    val chats = messages / 1000
   }
 
   println(s"""
@@ -82,6 +94,7 @@ object Main extends App {
   val done = Source(1 to amount.messages)
     .map { i =>
       val message = Message.generator(i)
+      messagesPublished.inc()
       ProducerMessage.single(
         new ProducerRecord(
           topic,
