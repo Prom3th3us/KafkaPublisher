@@ -8,3 +8,7 @@ libraryDependencies += "io.altoo" %% "akka-kryo-serialization" % "2.4.3"
 libraryDependencies += "com.typesafe.akka" %% "akka-stream" % "2.6.18"
 // https://mvnrepository.com/artifact/com.typesafe.akka/akka-actor
 libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.6.18"
+libraryDependencies += "com.typesafe.akka" %% "akka-cluster-sharding" % "2.6.18"
+
+// https://mvnrepository.com/artifact/io.prometheus/simpleclient_httpserver
+libraryDependencies += "io.prometheus" % "simpleclient_httpserver" % "0.15.0"
