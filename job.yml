@@ -3,6 +3,7 @@ kind: Job
 metadata:
   name: alpakka-kafka-publisher-1-million
 spec:
+  manualSelector: true
   selector:
     matchLabels:
       app: pcs-cluster
