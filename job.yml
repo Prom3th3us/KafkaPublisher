@@ -13,7 +13,6 @@ spec:
         app: pcs-cluster
     # This is the pod template
     spec:
-      serviceAccountName: pcs-cluster
       containers:
         - name: alpakka-kafka-publisher-1-million
           image: miguelemos/alpakka_kafka_publisher:with-prometheus-and-service-monitor
