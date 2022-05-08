@@ -64,6 +64,7 @@ rules:
       - services
       - endpoints
       - pods
+      - jobs
     verbs: ["get", "list", "watch"]
   - apiGroups: [""]
     resources:
