@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Deployment
+metadata:
+  name: alpakka-kafka-publisher-1-million
+spec:
+  manualSelector: true
+  selector:
+    matchLabels:
+      app: pcs-cluster
+  template:
+    metadata:
+      labels:
+        app: pcs-cluster
+    # This is the pod template
+    spec:
+      containers:
+        - name: alpakka-kafka-publisher-1-million
+          image: miguelemos/alpakka_kafka_publisher:with-prometheus-and-service-monitor
+          imagePullPolicy: IfNotPresent
+          ports:
+            - protocol: TCP
+              containerPort: 9095
+              name: monitoring
+          env:
+            - name: KAFKA_SERVERS
+              value: "kafka-svc.kafka-kraft.svc.cluster.local:9092"
+            - name: MESSAGES_AMOUNT
+              value: "26000000"
+            - name: TOPIC
+              value: 3-partition
+      restartPolicy: OnFailure
+      # The pod template ends here
