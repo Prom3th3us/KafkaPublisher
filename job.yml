@@ -3,12 +3,16 @@ kind: Job
 metadata:
   name: alpakka-kafka-publisher-1-million
 spec:
+  selector:
+    matchLabels:
+      app: pcs-cluster
   template:
     metadata:
       labels:
         app: pcs-cluster
     # This is the pod template
     spec:
+      serviceAccountName: pcs-cluster
       containers:
         - name: alpakka-kafka-publisher-1-million
           image: miguelemos/alpakka_kafka_publisher:with-prometheus-and-service-monitor
@@ -41,6 +45,7 @@ spec:
       app: pcs-cluster
   endpoints:
     - port: monitoring
+      path: /
 ---
 apiVersion: v1
 kind: ServiceAccount
