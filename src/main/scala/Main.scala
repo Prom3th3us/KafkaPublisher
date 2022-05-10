@@ -102,6 +102,9 @@ object Main extends App {
       val message = Message.generator(i)
       val topic = message.to.id
       val key = message.from.id
+
+      if (i % 1000 == 0) println(s"Published $i messages")
+
       ProducerMessage.single(
         new ProducerRecord(
           topic,
