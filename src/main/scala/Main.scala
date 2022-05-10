@@ -18,6 +18,12 @@ object Main extends App {
       .help("Total messages published to Kafka.")
       .register
 
+  val messagesPublishedOnForeach: Counter =
+    Counter.build
+      .name("messages_published_on_foreach")
+      .help("Total messages published to Kafka.")
+      .register
+
   val server: HTTPServer = new HTTPServer.Builder()
     .withPort(9095)
     .build()
@@ -96,6 +102,7 @@ object Main extends App {
       val message = Message.generator(i)
       val topic = message.to.id
       val key = message.from.id
+      messagesPublished.inc()
       ProducerMessage.single(
         new ProducerRecord(
           topic,
@@ -107,7 +114,6 @@ object Main extends App {
     }
     .via(Producer.flexiFlow(producerSettings))
     .runWith(Sink.foreach { _ =>
-      messagesPublished.inc()
-
+      messagesPublishedOnForeach.inc()
     })
 }
