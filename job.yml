@@ -1,16 +1,17 @@
+---
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: alpakka-kafka-publisher-1-million-with-grafana
+  name: alpakka-kafka-publisher-1-million
 spec:
   manualSelector: true
   selector:
     matchLabels:
-      app: pcs-cluster
+      app: alpakka
   template:
     metadata:
       labels:
-        app: pcs-cluster
+        app: alpakka
     # This is the pod template
     spec:
       containers:
@@ -19,7 +20,7 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - protocol: TCP
-              containerPort: 9095 
+              containerPort: 9095
               name: monitoring
           env:
             - name: KAFKA_SERVERS

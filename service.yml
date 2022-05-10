@@ -1,0 +1,21 @@
+---
+#headless
+apiVersion: v1
+kind: Service
+metadata:
+  name: alpakka-monitor
+  labels:
+    app: alpakka
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/port:   '9095'
+    prometheus.io/path: '/'
+spec:
+  ports:
+    - protocol: TCP
+      port: 9095
+      targetPort: 9095
+      name: monitoring
+  selector:
+    app: alpakka
+  publishNotReadyAddresses: true
