@@ -26,7 +26,7 @@ spec:
             - name: KAFKA_SERVERS
               value: "kafka-svc.kafka-kraft.svc.cluster.local:9092"
             - name: MESSAGES_AMOUNT
-              value: "26000000"
+              value: "10000000"
             - name: TOPIC
               value: 3-partition
       restartPolicy: OnFailure
