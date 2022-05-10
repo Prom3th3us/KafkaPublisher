@@ -100,7 +100,7 @@ object Main extends App {
   val done = Source(1 to amount.messages)
     .map { i =>
       val message = Message.generator(i)
-      val topic = message.to.id
+      val topic = config.getString("topic")
       val key = message.from.id
 
       messagesPublished.inc()
