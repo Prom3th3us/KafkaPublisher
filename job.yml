@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: alpakka-kafka-publisher-1-million
-          image: miguelemos/alpakka_kafka_publisher:kafka-3-more-metrics
+          image: miguelemos/alpakka_kafka_publisher:kafka-3-more-metrics-improved
           imagePullPolicy: IfNotPresent
           ports:
             - protocol: TCP

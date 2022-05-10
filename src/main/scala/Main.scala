@@ -103,7 +103,8 @@ object Main extends App {
       val topic = message.to.id
       val key = message.from.id
 
-      if (i % 1000 == 0) println(s"Published $i messages")
+      messagesPublished.inc()
+      if (i % 1000 == 0) { println(s"Published $i messages") }
 
       ProducerMessage.single(
         new ProducerRecord(
@@ -116,6 +117,6 @@ object Main extends App {
     }
     .via(Producer.flexiFlow(producerSettings))
     .runWith(Sink.foreach { _ =>
-      messagesPublished.inc()
+      messagesPublishedOnForeach.inc()
     })
 }
