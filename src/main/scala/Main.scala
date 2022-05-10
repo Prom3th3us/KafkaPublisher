@@ -35,7 +35,6 @@ object Main extends App {
 
   val bootstrapServers =
     config.getString("akka.kafka.producer.kafka-clients.bootstrap.servers")
-  val topic = config.getString("topic")
 
   val producerSettings =
     ProducerSettings(system, new StringSerializer, new StringSerializer)
@@ -96,10 +95,12 @@ object Main extends App {
   val done = Source(1 to amount.messages)
     .map { i =>
       val message = Message.generator(i)
+      val topic = message.to.id
+      val key = message.from.id
       ProducerMessage.single(
         new ProducerRecord(
           topic,
-          message.to.id,
+          key,
           s"${message.from.id}: ${message.text}"
         ),
         i
