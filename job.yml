@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: alpakka-kafka-publisher-1-million
+  name: alpakka-kafka-publisher-1-million-with-grafana
 spec:
   manualSelector: true
   selector:

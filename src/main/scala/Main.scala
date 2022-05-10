@@ -51,7 +51,6 @@ object Main extends App {
       |  BENCHMARK
       |  
       |  - messages: ${amount.messages}
-      |  - topic: ${topic}
       |  
       |  EXPOSING PORT 9095 for PROMETHEUS metrics
       |  
