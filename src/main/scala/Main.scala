@@ -12,15 +12,15 @@ import scala.util.Random
 object Main extends App {
 
   import io.prometheus.client.Counter
-  val messagesPublishedFromZero: Counter =
+  val messagesPublished: Counter =
     Counter.build
-      .name("messages_published")
+      .name("messages_published_from_zero")
       .help("Total messages published to Kafka.")
       .register
 
-  val messagesPublishedOnForeachFromZero: Counter =
+  val messagesPublishedOnForeach: Counter =
     Counter.build
-      .name("messages_published_on_foreach")
+      .name("messages_published_on_foreach_from_zero")
       .help("Total messages published to Kafka.")
       .register
 
@@ -102,7 +102,6 @@ object Main extends App {
       val message = Message.generator(i)
       val topic = message.to.id
       val key = message.from.id
-      messagesPublishedFromZero.inc()
       ProducerMessage.single(
         new ProducerRecord(
           topic,
@@ -114,6 +113,6 @@ object Main extends App {
     }
     .via(Producer.flexiFlow(producerSettings))
     .runWith(Sink.foreach { _ =>
-      messagesPublishedOnForeachFromZero.inc()
+      messagesPublished.inc()
     })
 }
